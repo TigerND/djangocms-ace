@@ -1,4 +1,5 @@
 ## djangocms-ace
+[![Build Status](https://travis-ci.org/TigerND/djangocms-ace.svg?branch=master)](https://travis-ci.org/TigerND/djangocms-ace)
 
 ACE Editor plugin for Django CMS.
 
