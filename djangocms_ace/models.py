@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import json
 
 from cms.models import CMSPlugin
@@ -109,6 +110,10 @@ class AceEditorPluginModel(CMSPlugin):
 
     def script_block(self):
         return self.config.script_block
+        
+    def script_link(self):
+        from django.templatetags.static import static
+        return getattr(settings, 'ACE_EDITOR_SCRIPT_LINK', static('djangocms_ace/ace/ace.js'))
         
     def opts(self):
         result = {
