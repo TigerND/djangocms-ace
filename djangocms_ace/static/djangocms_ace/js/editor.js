@@ -9,7 +9,6 @@ window.djangocms_ace_create_editor = function(content, opts, callback) {
         editor.setTheme(opts.theme);
         editor.getSession().setMode(opts.mode);
         editor.$blockScrolling = Infinity;
-        console.log(content);
         editor.setValue(content);
         editor.selection.clearSelection();
         document.getElementById(element_name).style.fontSize = '14px';

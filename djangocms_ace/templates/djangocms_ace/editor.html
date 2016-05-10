@@ -2,7 +2,7 @@
 {% include "djangocms_ace/element.html" with name=instance.variable_name %}
 <script type='text/plain' id="{{ instance.variable_name }}_source" >{{ instance.content|safe }}</script>
 {% addtoblock "js" %}
-<script src="{% static 'djangocms_ace/js/ace.js' %}"></script>
+<script src="{% static 'djangocms_ace/ace/ace.js' %}"></script>
 {% endaddtoblock %}
 {% addtoblock "js" %}
 <script src="{% static 'djangocms_ace/js/editor.js' %}"></script>
@@ -11,7 +11,6 @@
 <script>
 window.djangocms_ace_create_editor(document.getElementById("{{ instance.variable_name }}_source").textContent, {{ instance.opts|safe }},
 function(err, editor) {
-    console.log('ACE Editor', '{{ instance.ident }}', 'created');
     window.djangocms_ace_editor_{{ instance.ident }} = editor;
 });
 </script>
