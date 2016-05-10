@@ -1,3 +1,4 @@
+/*global ace*/
 window.djangocms_ace_create_editor = function(content, opts, callback) {
     try {
         var element_name = opts.variable_name + '_element';
@@ -19,4 +20,4 @@ window.djangocms_ace_create_editor = function(content, opts, callback) {
         console.log(err);
         callback(err);
     }
-}
+};
