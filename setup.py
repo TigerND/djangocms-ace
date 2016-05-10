@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='djangocms-ace',
-    version='0.1.3',
+    version='0.1.4',
     description='ACE Editor plugin for Django CMS',
     author='Aleksandr Zykov',
     author_email='tiger@vilijavis.lt',
