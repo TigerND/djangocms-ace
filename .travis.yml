@@ -1,0 +1,25 @@
+language: python
+
+# Use container based infrastructure
+sudo: false
+
+env:
+  matrix:
+    - TOXENV=flake8
+
+cache:
+  directories:
+    - $HOME/.wheelhouse
+
+install:
+  - pip install tox
+  - pip install coveralls
+
+script:
+  - tox -e $TOXENV
+
+after_success: coveralls
+
+notifications:
+  email:
+    - tiger@vilijavis.lt

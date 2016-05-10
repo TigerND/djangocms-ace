@@ -1,0 +1,18 @@
+{% load i18n cms_tags staticfiles sekizai_tags %}
+{% include "djangocms_ace/element.html" with name=instance.variable_name %}
+<script type='text/plain' id="{{ instance.variable_name }}_source" >{{ instance.content|safe }}</script>
+{% addtoblock "js" %}
+<script src="//cdn.jsdelivr.net/ace/1.2.3/min/ace.js"></script>
+{% endaddtoblock %}
+{% addtoblock "js" %}
+<script src="{% static 'djangocms_ace/js/editor.js' %}"></script>
+{% endaddtoblock %}
+{% addtoblock "js" %}
+<script>
+window.djangocms_ace_create_editor(document.getElementById("{{ instance.variable_name }}_source").textContent, {{ instance.opts|safe }},
+function(err, editor) {
+    console.log('ACE Editor', '{{ instance.ident }}', 'created');
+    window.djangocms_ace_editor_{{ instance.ident }} = editor;
+});
+</script>
+{% endaddtoblock %}
