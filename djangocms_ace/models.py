@@ -35,6 +35,14 @@ class AceEditorConfigModel(models.Model):
         max_length=32,
     )
 
+    script_block = models.CharField('Script block',
+        null=False,
+        blank=False,
+        default='js',
+        help_text=_(u'Script block'),
+        max_length=32,
+    )
+
     def __str__(self):
         return self.name
 
@@ -99,6 +107,9 @@ class AceEditorPluginModel(CMSPlugin):
     def variable_name(self):
         return 'djangocms_ace_editor_' + self.ident()
 
+    def script_block(self):
+        return self.config.script_block
+        
     def opts(self):
         result = {
             'ident': self.ident(),
