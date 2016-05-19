@@ -7,12 +7,23 @@ from cms.models import CMSPlugin
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.templatetags.static import static
 from cms.utils.compat.dj import python_2_unicode_compatible
+
+
+config_defaults = {
+    'script_block': getattr(settings, 'ACE_EDITOR_SCRIPT_BLOCK', 'js'),
+    'script_link': getattr(settings, 'ACE_EDITOR_SCRIPT_LINK', static('djangocms_ace/ace/ace.js')),
+    'theme': getattr(settings, 'ACE_EDITOR_DEFAULT_THEME', 'ace/theme/chrome'),
+    'mode': getattr(settings, 'ACE_EDITOR_DEFAULT_MODE', 'ace/mode/plain_text'),
+    'variable_name': None,
+    'readonly': True,
+}
 
 
 @python_2_unicode_compatible
 class AceEditorConfigModel(models.Model):
-
+    
     name = models.CharField('Name',
         null=False,
         blank=False,
@@ -23,7 +34,7 @@ class AceEditorConfigModel(models.Model):
     theme = models.CharField('Theme',
         null=False,
         blank=False,
-        default=getattr(settings, 'ACE_EDITOR_DEFAULT_THEME', 'ace/theme/chrome'),
+        default=config_defaults['theme'],
         help_text=_(u'Theme module'),
         max_length=32,
     )
@@ -31,7 +42,7 @@ class AceEditorConfigModel(models.Model):
     mode = models.CharField('Mode',
         null=False,
         blank=False,
-        default=getattr(settings, 'ACE_EDITOR_DEFAULT_MODE', 'ace/mode/javascript'),
+        default=config_defaults['mode'],
         help_text=_(u'Mode module'),
         max_length=32,
     )
@@ -39,17 +50,25 @@ class AceEditorConfigModel(models.Model):
     script_block = models.CharField('Script block',
         null=False,
         blank=False,
-        default='js',
+        default=config_defaults['script_block'],
         help_text=_(u'Script block'),
         max_length=32,
+    )
+
+    script_link = models.CharField('Script link',
+        null=False,
+        blank=False,
+        default=config_defaults['script_link'],
+        help_text=_(u'Script link'),
+        max_length=256,
     )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _('ACE Editor config')
-        verbose_name_plural = _('ACE Editor configs')
+        verbose_name = _('Ace Editor config')
+        verbose_name_plural = _('Ace Editor configs')
 
 
 @python_2_unicode_compatible
@@ -68,6 +87,7 @@ class AceEditorPluginModel(CMSPlugin):
         max_length=32,
     )
 
+    @property
     def ident(self):
         return self.name if self.name else str(self.id)
 
@@ -75,7 +95,7 @@ class AceEditorPluginModel(CMSPlugin):
         null=False,
         blank=False,
         default=True,
-        help_text=_(u'Is readonly'),
+        help_text=_(u'Readonly'),
     )
 
     content = models.TextField('Content',
@@ -92,6 +112,7 @@ class AceEditorPluginModel(CMSPlugin):
         max_length=32,
     )
 
+    @property
     def editor_theme(self):
         return self.theme if self.theme else self.config.theme
 
@@ -102,28 +123,32 @@ class AceEditorPluginModel(CMSPlugin):
         max_length=32,
     )
 
+    @property
     def editor_mode(self):
         return self.mode if self.mode else self.config.mode
 
+    @property
     def variable_name(self):
-        return 'djangocms_ace_editor_' + self.ident()
+        return 'djangocms_ace_editor_' + self.ident
 
+    @property
     def script_block(self):
         return self.config.script_block
         
+    @property
     def script_link(self):
-        from django.templatetags.static import static
-        return getattr(settings, 'ACE_EDITOR_SCRIPT_LINK', static('djangocms_ace/ace/ace.js'))
-        
+        return self.config.script_link
+
+    @property
     def opts(self):
         result = {
-            'ident': self.ident(),
-            'variable_name': self.variable_name(),
-            'theme': self.editor_theme(),
-            'mode': self.editor_mode(),
+            'ident': self.ident,
+            'variable_name': self.variable_name,
+            'theme': self.editor_theme,
+            'mode': self.editor_mode,
             'readonly': self.readonly,
         }
         return json.dumps(result)
 
     def __str__(self):
-        return _(u'AceEditor %(ident)s') % {'ident': self.ident()}
+        return _(u'AceEditor %(ident)s') % {'ident': self.ident}

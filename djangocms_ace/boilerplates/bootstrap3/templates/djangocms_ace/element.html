@@ -1,3 +1,5 @@
 <div class="panel panel-default">
     <div id="{{ name }}_element"></div>
 </div>
+{# For search engines #}
+<span class="sr-only">{% autoescape on %}{{ content|safe }}{% endautoescape %}</span>

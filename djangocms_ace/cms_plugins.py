@@ -19,7 +19,7 @@ class AceEditorPlugin(CMSPluginBase):
     name = _('Editor')
     module = _('ACE')
     model = AceEditorPluginModel
-    render_template = "djangocms_ace/editor.html"
+    render_template = "djangocms_ace/plugin.html"
     text_enabled = True
 
     def render(self, context, instance, placeholder):
@@ -30,7 +30,7 @@ class AceEditorPlugin(CMSPluginBase):
         return u'//img.shields.io/badge/%s%%20%s-%s-green.svg' % (
             AceEditorPlugin.module,
             AceEditorPlugin.name,
-            urllib2.quote(instance.ident()),
+            urllib2.quote(instance.ident),
         )
 
     def icon_alt(self, instance):

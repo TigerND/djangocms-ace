@@ -1,0 +1,2 @@
+{% load djangocms_ace_tags %}
+{% with_ace_editor instance=instance %}{{ instance.content|safe }}{% endwith_ace_editor %}

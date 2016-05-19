@@ -4,11 +4,11 @@ from setuptools import setup
 
 setup(
     name='djangocms-ace',
-    version='0.1.4',
-    description='ACE Editor plugin for Django CMS',
+    version='0.2.0',
+    description='Ace Editor plugin for Django CMS',
     author='Aleksandr Zykov',
     author_email='tiger@vilijavis.lt',
-    url='https://github.com/TigerND/djangocms-tonicdev',
+    url='https://github.com/TigerND/djangocms-ace',
     packages=[
         'djangocms_ace',
         'djangocms_ace.migrations',
@@ -16,6 +16,7 @@ setup(
     data_files=[
     ],
     install_requires = [
+        'django>=1.8',
         'django-cms>=3.2.5',
     ],
     classifiers = [

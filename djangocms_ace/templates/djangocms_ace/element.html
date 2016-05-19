@@ -1,1 +1,3 @@
 <div id="{{ name }}_element"></div>
+{# For search engines #}
+<div style="display:none;">{% autoescape on %}{{ content|safe }}{% endautoescape %}</div>
