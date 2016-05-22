@@ -12,7 +12,7 @@ from cms.utils.compat.dj import python_2_unicode_compatible
 
 
 config_defaults = {
-    'script_block': getattr(settings, 'ACE_EDITOR_SCRIPT_BLOCK', 'js'),
+    'script_block': getattr(settings, 'ACE_EDITOR_SCRIPT_BLOCK', 'headjs'),
     'script_link': getattr(settings, 'ACE_EDITOR_SCRIPT_LINK', static('djangocms_ace/ace/ace.js')),
     'theme': getattr(settings, 'ACE_EDITOR_DEFAULT_THEME', 'ace/theme/chrome'),
     'mode': getattr(settings, 'ACE_EDITOR_DEFAULT_MODE', 'ace/mode/plain_text'),
