@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 import os
 import json
@@ -12,13 +13,15 @@ from cms.utils.compat.dj import python_2_unicode_compatible
 
 
 config_defaults = {
-    'script_block': getattr(settings, 'ACE_EDITOR_SCRIPT_BLOCK', 'headjs'),
-    'script_link': getattr(settings, 'ACE_EDITOR_SCRIPT_LINK', static('djangocms_ace/ace/ace.js')),
-    'theme': getattr(settings, 'ACE_EDITOR_DEFAULT_THEME', 'ace/theme/chrome'),
-    'mode': getattr(settings, 'ACE_EDITOR_DEFAULT_MODE', 'ace/mode/plain_text'),
+    'script_block': 'js',
+    'script_link': static('djangocms_ace/ace/ace.js'),
+    'theme': 'ace/theme/chrome',
+    'mode': 'ace/mode/plain_text',
     'variable_name': None,
     'readonly': True,
 }
+
+config_defaults.update(**getattr(settings, 'DJANGOCMS_ACE_CONFIG_DEFAULTS', {}))
 
 
 @python_2_unicode_compatible

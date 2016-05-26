@@ -21,6 +21,9 @@ def render_ace_editor(context, extra_context=None, **kwargs):
     config = kwargs['config'] if ('config' in kwargs) else AceDefaultConfig()
     instance = kwargs['instance'] if ('instance' in kwargs) else config
 
+    if (hasattr(instance, 'config')):
+        config = instance.config
+
     values = {}
     for opt in config_defaults.keys():
         v = _resolve(kwargs[opt] if (opt in kwargs) else getattr(instance, opt, getattr(config, opt, config_defaults[opt])))
