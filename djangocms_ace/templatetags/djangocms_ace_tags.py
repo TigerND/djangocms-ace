@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import six
 import uuid
 import json
 
@@ -23,6 +24,11 @@ def render_ace_editor(context, extra_context=None, **kwargs):
 
     if (hasattr(instance, 'config')):
         config = instance.config
+
+    if (isinstance(config, six.string_types)):
+        from ..models import AceEditorConfigModel
+        # TODO: Handle errors, use a slug field instead
+        config = AceEditorConfigModel.objects.get(name=config)
 
     values = {}
     for opt in config_defaults.keys():
